@@ -33,6 +33,7 @@ int main()
 {
     /* verify the result of 4x4 matrix */
     {
+#ifdef MAIN
         int testin[16] = { 0, 1,  2,  3,  4,  5,  6,  7,
                            8, 9, 10, 11, 12, 13, 14, 15
                          };
@@ -55,6 +56,7 @@ int main()
         }
         assert(0 == memcmp(testout, expected, 16 * sizeof(int)) &&
                "Verification fails");
+#endif
     }
 
     {
@@ -69,20 +71,24 @@ int main()
             for (int x = 0; x < TEST_W; x++)
                 *(src + y * TEST_W + x) = rand();
 
+#if defined MAIN | defined SSE_PREFETCH
         clock_gettime(CLOCK_REALTIME, &start);
         sse_prefetch_transpose(src, out0, TEST_W, TEST_H);
         clock_gettime(CLOCK_REALTIME, &end);
         printf("sse prefetch: \t %ld us\n", diff_in_us(start, end));
-
+#endif
+#if defined MAIN | defined SSE
         clock_gettime(CLOCK_REALTIME, &start);
         sse_transpose(src, out1, TEST_W, TEST_H);
         clock_gettime(CLOCK_REALTIME, &end);
         printf("sse: \t\t %ld us\n", diff_in_us(start, end));
-
+#endif
+#if defined MAIN | defined NAIVE
         clock_gettime(CLOCK_REALTIME, &start);
         naive_transpose(src, out2, TEST_W, TEST_H);
         clock_gettime(CLOCK_REALTIME, &end);
         printf("naive: \t\t %ld us\n", diff_in_us(start, end));
+#endif
 
         free(src);
         free(out0);
