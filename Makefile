@@ -1,7 +1,11 @@
 CC ?= gcc
 CFLAGS = -std=gnu99 -O0 -Wall -Wextra
 
-EXEC = check_execute main naive_transpose sse_transpose sse_prefetch_transpose avx_transpose avx_prefetch_transpose
+EXEC = check_execute \
+	   main naive_transpose \
+	   sse_transpose sse_prefetch_transpose \
+	   avx_transpose avx_prefetch_transpose \
+	   verify
 
 OUTPUT_DIR := executes
 
@@ -48,6 +52,11 @@ avx_prefetch_transpose: $(SRCS_common)
 
 check_execute:
 	if [ ! -d executes ]; then mkdir executes; fi
+
+verify: verify.c
+	$(CC) $(CFLAGS) -msse -mavx \
+		-DMAIN=$@ -o $(OUTPUT_DIR)/$@ \
+		verify.c
 
 .PHONY: clean
 clean:
