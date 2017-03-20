@@ -2,7 +2,7 @@
 #define TRANSPOSE_IMPL
 
 
-#if defined MAIN | defined NAIVE
+#if defined(MAIN) | defined(NAIVE)
 void naive_transpose(int *src, int *dst, int w, int h)
 {
     for (int x = 0; x < w; x++)
@@ -11,7 +11,7 @@ void naive_transpose(int *src, int *dst, int w, int h)
 }
 #endif
 
-#if defined MAIN | defined SSE
+#if defined(MAIN) | defined(SSE)
 void sse_transpose(int *src, int *dst, int w, int h)
 {
     for (int x = 0; x < w; x += 4) {
@@ -37,7 +37,7 @@ void sse_transpose(int *src, int *dst, int w, int h)
 }
 #endif
 
-#if defined MAIN | defined SSE_PREFETCH
+#if defined(MAIN) | defined(SSE_PREFETCH)
 void sse_prefetch_transpose(int *src, int *dst, int w, int h)
 {
     for (int x = 0; x < w; x += 4) {
@@ -69,7 +69,7 @@ void sse_prefetch_transpose(int *src, int *dst, int w, int h)
 }
 #endif
 
-#if defined MAIN | defined AVX
+#if defined(MAIN) | defined(AVX)
 void avx_transpose(int *src, int *dst, int w, int h)
 {
     for (int x = 0; x < w; x += 8) {
@@ -127,7 +127,7 @@ void avx_transpose(int *src, int *dst, int w, int h)
 }
 #endif
 
-#if defined MAIN | defined AVX_PREFETCH
+#if defined(MAIN) | defined(AVX_PREFETCH)
 void avx_prefetch_transpose(int *src, int *dst, int w, int h)
 {
     for (int x = 0; x < w; x += 8) {

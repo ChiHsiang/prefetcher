@@ -73,31 +73,31 @@ int main()
             for (int x = 0; x < TEST_W; x++)
                 *(src + y * TEST_W + x) = rand();
 
-#if defined MAIN | defined NAIVE
+#if defined(MAIN) | defined(NAIVE)
         clock_gettime(CLOCK_REALTIME, &start);
         naive_transpose(src, out2, TEST_W, TEST_H);
         clock_gettime(CLOCK_REALTIME, &end);
         printf("naive: \t\t %ld us\n", diff_in_us(start, end));
 #endif
-#if defined MAIN | defined SSE
+#if defined(MAIN) | defined(SSE)
         clock_gettime(CLOCK_REALTIME, &start);
         sse_transpose(src, out1, TEST_W, TEST_H);
         clock_gettime(CLOCK_REALTIME, &end);
         printf("sse: \t\t %ld us\n", diff_in_us(start, end));
 #endif
-#if defined MAIN | defined AVX
+#if defined(MAIN) | defined(AVX)
         clock_gettime(CLOCK_REALTIME, &start);
         avx_transpose(src, out2, TEST_W, TEST_H);
         clock_gettime(CLOCK_REALTIME, &end);
         printf("avx: \t\t %ld us\n", diff_in_us(start, end));
 #endif
-#if defined MAIN | defined SSE_PREFETCH
+#if defined(MAIN) | defined(SSE_PREFETCH)
         clock_gettime(CLOCK_REALTIME, &start);
         sse_prefetch_transpose(src, out0, TEST_W, TEST_H);
         clock_gettime(CLOCK_REALTIME, &end);
         printf("sse prefetch: \t %ld us\n", diff_in_us(start, end));
 #endif
-#if defined MAIN | defined AVX_PREFETCH
+#if defined(MAIN) | defined(AVX_PREFETCH)
         clock_gettime(CLOCK_REALTIME, &start);
         avx_prefetch_transpose(src, out2, TEST_W, TEST_H);
         clock_gettime(CLOCK_REALTIME, &end);
